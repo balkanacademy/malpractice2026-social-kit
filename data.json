@@ -11,7 +11,7 @@
     "imageFileName": "barry-schifrin-chair.png",
     "originalImage": "images/original/barry-schifrin-chair.png",
     "previewImage": "images/original/barry-schifrin-chair.png",
-    "qrImage": ""
+    "qrImage": "images/qr/barry-schifrin-chair.svg"
   },
   {
     "fullName": "Barry Schifrin",
@@ -25,7 +25,7 @@
     "imageFileName": "barry-schifrin-keynote-speaker.png",
     "originalImage": "images/original/barry-schifrin-keynote-speaker.png",
     "previewImage": "images/original/barry-schifrin-keynote-speaker.png",
-    "qrImage": ""
+    "qrImage": "images/qr/barry-schifrin-keynote-speaker.svg"
   },
   {
     "fullName": "Peter Vanezis",
@@ -39,7 +39,7 @@
     "imageFileName": "peter-vanezis-keynote-speaker.png",
     "originalImage": "images/original/peter-vanezis-keynote-speaker.png",
     "previewImage": "images/original/peter-vanezis-keynote-speaker.png",
-    "qrImage": ""
+    "qrImage": "images/qr/peter-vanezis-keynote-speaker.svg"
   },
   {
     "fullName": "Tuğçe Koca Yavuz",
@@ -53,7 +53,7 @@
     "imageFileName": "tugce-koca-yavuz-poster-presenter-1.png",
     "originalImage": "images/original/tugce-koca-yavuz-poster-presenter-1.png",
     "previewImage": "images/original/tugce-koca-yavuz-poster-presenter-1.png",
-    "qrImage": ""
+    "qrImage": "images/qr/tugce-koca-yavuz-poster-presenter-1.svg"
   },
   {
     "fullName": "Tuğçe Koca Yavuz",
@@ -67,6 +67,6 @@
     "imageFileName": "tugce-koca-yavuz-poster-presenter-2.png",
     "originalImage": "images/original/tugce-koca-yavuz-poster-presenter-2.png",
     "previewImage": "images/original/tugce-koca-yavuz-poster-presenter-2.png",
-    "qrImage": ""
+    "qrImage": "images/qr/tugce-koca-yavuz-poster-presenter-2.svg"
   }
 ]
