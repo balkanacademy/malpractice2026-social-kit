@@ -40,13 +40,13 @@
     .results{display:grid;gap:.75rem;max-width:820px;margin:0 auto}
     .result{width:100%;text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:11px;padding:1rem;cursor:pointer;-webkit-appearance:none;appearance:none}
     .result:hover{border-color:var(--red);box-shadow:0 8px 24px rgba(0,0,0,.07)}
-    .result-name{display:block;color:var(--ink);font-size:1.08rem;font-weight:800}.result-role{display:block;color:var(--red);font-size:.82rem;text-transform:uppercase;letter-spacing:.05em;font-weight:800;margin-top:.35rem}.result-title{display:block;color:var(--ink);margin-top:.25rem;font-weight:700}
+    .result-name{display:block;color:var(--ink);font-size:1.08rem;font-weight:800}.result-role{display:block;color:var(--red);font-size:.82rem;text-transform:uppercase;letter-spacing:.05em;font-weight:800;margin-top:.35rem}.result-title{display:block;color:var(--ink);margin-top:.25rem;font-weight:700}.result-title:empty{display:none}
     .post{display:none;grid-template-columns:minmax(0,.9fr) minmax(360px,1.1fr);gap:1.4rem;align-items:start;margin-top:1.4rem}
     .post.active{display:grid}
     .visual{background:#fff;border:1px solid var(--line);border-radius:13px;padding:.55rem;box-shadow:0 14px 34px rgba(0,0,0,.09)}
     .visual img{display:block;width:100%;height:auto;border-radius:8px}
     .details{background:#fff;border:1px solid var(--line);border-radius:13px;padding:1.15rem}
-    .details h2{font-size:1.45rem;line-height:1.2;margin:0}.role{color:var(--red);font-weight:800;margin:.35rem 0}.title{color:var(--muted);margin:.4rem 0 1rem}
+    .details h2{font-size:1.45rem;line-height:1.2;margin:0}.role{color:var(--red);font-weight:800;margin:.35rem 0}.title{color:var(--muted);margin:.4rem 0 1rem}.title:empty{display:none}
     .guide{margin-top:1rem;border-top:1px solid var(--line);padding-top:.9rem}.guide h3{margin:0 0 .3rem}.guide-intro{color:var(--muted);margin:.25rem 0 .75rem}.caption-note{margin:0 0 1rem;padding:.7rem .8rem;border-radius:8px;background:#f1f5fb;color:#31415b;font-size:.9rem}
     .device-picker{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;margin:.75rem 0 1rem}.device-picker span{font-size:.85rem;color:var(--muted);margin-right:.2rem}.device-picker button{padding:.42rem .65rem;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);cursor:pointer;font-size:.85rem;font-weight:700}.device-picker button[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff}
     .steps{display:grid;gap:.7rem}.step{display:grid;grid-template-columns:2rem 1fr;gap:.65rem;border:1px solid var(--line);border-radius:10px;padding:.8rem;background:#fafafa}.step-number{display:grid;place-items:center;width:2rem;height:2rem;border-radius:50%;background:var(--red);color:#fff;font-weight:800}.step strong{display:block}.step p{margin:.2rem 0 .65rem;color:var(--muted);font-size:.92rem}.step button,.step a{display:inline-block;text-align:center;text-decoration:none;width:100%}
@@ -141,7 +141,7 @@
       $('results').replaceChildren();$('post').classList.remove('active');current=null;
       if(!matches.length){announce("We couldn't find a matching test record. Check the spelling or try part of the name.");return}
       announce(`${matches.length} matching post${matches.length===1?'':'s'} found. Select one below.`);
-      matches.forEach(record=>{const button=document.createElement('button');button.type='button';button.className='result';button.innerHTML=`<span class="result-name">${escapeHtml(record.fullName)}</span><span class="result-role">${escapeHtml(record.role)}</span><span class="result-title">${escapeHtml(record.presentationTitle)}</span>`;button.addEventListener('click',()=>selectRecord(record));$('results').append(button)});
+      matches.forEach(record=>{const button=document.createElement('button');button.type='button';button.className='result';const title=record.presentationTitle?`<span class="result-title">${escapeHtml(record.presentationTitle)}</span>`:'';button.innerHTML=`<span class="result-name">${escapeHtml(record.fullName)}</span><span class="result-role">${escapeHtml(record.role)}</span>${title}`;button.addEventListener('click',()=>selectRecord(record));$('results').append(button)});
     }
     const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
     async function prepareNativeFile(record){
@@ -166,8 +166,8 @@
     }
     function selectRecord(record){
       current=record;$('results').replaceChildren();$('copyFallback').style.display='none';
-      $('postName').textContent=record.fullName;$('postRole').textContent=record.role;$('postTitle').textContent=record.presentationTitle;
-      $('postImage').src=record.originalImage;$('postImage').alt=record.altText;
+      $('postName').textContent=record.fullName;$('postRole').textContent=record.role;$('postTitle').textContent=record.presentationTitle||'';
+      $('postImage').src=record.previewImage||record.originalImage;$('postImage').alt=record.altText;
       $('fullScreen').href=`${SITE_BASE}/?post=${encodeURIComponent(record.slug)}`;$('downloadHint').textContent=`The file is called ${record.imageFileName}.`;
       if(record.qrImage){$('recordQr').src=record.qrImage;$('recordQr').closest('.qr').style.display=''}else{$('recordQr').closest('.qr').style.display='none'}
       ['copyLinkedIn','iosCopyLinkedIn','downloadImage','openLinkedIn','nativeShare','mobileDownload','iosSaveImage','iosOpenLinkedIn'].forEach(id=>$(id).textContent=({copyLinkedIn:'Copy LinkedIn Caption',iosCopyLinkedIn:'Copy LinkedIn Caption',downloadImage:'Download My Image',openLinkedIn:'Open LinkedIn and Add Photo',nativeShare:'Share Full Image',mobileDownload:'Download Image Instead',iosSaveImage:'Open Image to Save',iosOpenLinkedIn:'Open LinkedIn'})[id]);
