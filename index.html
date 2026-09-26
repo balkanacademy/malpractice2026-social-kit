@@ -66,7 +66,7 @@
   <div class="shell">
     <header>
       <div class="brand"><strong>MALPRACTICE <span>2026</span></strong><small>Social Media Kit</small></div>
-      <span class="test">Test version</span>
+      <span class="test">Official sharing kit</span>
     </header>
     <main>
       <section class="search-panel" id="searchPanel">
@@ -139,7 +139,7 @@
     }
     function showResults(matches){
       $('results').replaceChildren();$('post').classList.remove('active');current=null;
-      if(!matches.length){announce("We couldn't find a matching test record. Check the spelling or try part of the name.");return}
+      if(!matches.length){announce("We couldn't find a matching record. Check the spelling or try part of the name.");return}
       announce(`${matches.length} matching post${matches.length===1?'':'s'} found. Select one below.`);
       matches.forEach(record=>{const button=document.createElement('button');button.type='button';button.className='result';const title=record.presentationTitle?`<span class="result-title">${escapeHtml(record.presentationTitle)}</span>`:'';button.innerHTML=`<span class="result-name">${escapeHtml(record.fullName)}</span><span class="result-role">${escapeHtml(record.role)}</span>${title}`;button.addEventListener('click',()=>selectRecord(record));$('results').append(button)});
     }
@@ -183,7 +183,7 @@
     $('nativeShare').addEventListener('click',()=>shareCurrent('nativeShare'));
     $('iosSaveImage').addEventListener('click',saveImageForIOS);
     $('iosOpenLinkedIn').addEventListener('click',()=>{window.open('https://www.linkedin.com/feed/','_blank','noopener');markDone('iosOpenLinkedIn','LinkedIn opened')});
-    fetch('data.json').then(response=>{if(!response.ok)throw new Error('data');return response.json()}).then(data=>{records=data;announce('Ready. Enter your name to find your post.');const params=new URLSearchParams(location.search);const slug=params.get('post');const person=params.get('person');if(slug){const record=records.find(item=>item.slug===slug);if(record)selectRecord(record)}else if(person){$('nameSearch').value=person;showResults(findMatches(person))}}).catch(()=>announce('The test data could not be loaded. Please open the deployed HTTPS version.'));
+    fetch('data.json').then(response=>{if(!response.ok)throw new Error('data');return response.json()}).then(data=>{records=data;announce('Ready. Enter your name to find your post.');const params=new URLSearchParams(location.search);const slug=params.get('post');const person=params.get('person');if(slug){const record=records.find(item=>item.slug===slug);if(record)selectRecord(record)}else if(person){$('nameSearch').value=person;showResults(findMatches(person))}}).catch(()=>announce('The site data could not be loaded. Please open the deployed HTTPS version.'));
   </script>
 </body>
 </html>
