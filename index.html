@@ -117,6 +117,7 @@
     let currentFile = null;
     const detectedMobile = matchMedia('(max-width: 760px), (hover: none)').matches;
     const detectedIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const detectedAndroid = /Android/i.test(navigator.userAgent);
     const embedded = window.self !== window.top;
     let deviceMode = detectedIOS ? 'ios' : detectedMobile ? 'android' : 'desktop';
     const $ = id => document.getElementById(id);
@@ -142,7 +143,7 @@
       $('results').replaceChildren();$('post').classList.remove('active');current=null;
       if(!matches.length){announce("We couldn't find a matching record. Check the spelling or try part of the name.");return}
       announce(`${matches.length} matching post${matches.length===1?'':'s'} found. Select one below.`);
-      matches.forEach(record=>{const button=document.createElement('button');button.type='button';button.className='result';const title=record.presentationTitle?`<span class="result-title">${escapeHtml(record.presentationTitle)}</span>`:'';button.innerHTML=`<span class="result-name">${escapeHtml(record.fullName)}</span><span class="result-role">${escapeHtml(record.role)}</span>${title}`;button.addEventListener('click',()=>selectRecord(record));$('results').append(button)});
+      matches.forEach(record=>{const button=document.createElement('button');button.type='button';button.className='result';const title=record.presentationTitle?`<span class="result-title">${escapeHtml(record.presentationTitle)}</span>`:'';button.innerHTML=`<span class="result-name">${escapeHtml(record.fullName)}</span><span class="result-role">${escapeHtml(record.role)}</span>${title}`;button.addEventListener('click',()=>{if(embedded&&detectedAndroid){window.open(`${SITE_BASE}/?post=${encodeURIComponent(record.slug)}`,'_blank','noopener');announce('The Android sharing page opened with your selected post.');return}selectRecord(record)});$('results').append(button)});
     }
     const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
     async function prepareNativeFile(record){
